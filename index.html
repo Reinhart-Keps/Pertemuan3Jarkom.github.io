@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+
+<header>
+    <div class="jumbotron">
+        <h1>  Jaringan Komputer  </h1>
+        <!-- <p>Kota metropolitan terbesar di Provinsi Jawa Barat, sekaligus menjadi ibu kota provinsi tersebut.</p> -->
+    </div>
+    <nav>
+        <ul>
+            <li> <a href="#ModelReferensiTCP/IP">Model Referensi TCP/IP</a></li>
+            <li> <a href="#FungsiLayer">Fungsi Layer</a></li>
+            <li> <a href="#PenjelasanPortNumber">Penjelasan Port Number</a></li>
+            <li> <a href="#PenjelasanTentangUDP">Penjelasan Tentang UDP</a></li>
+            <li> <a href="#PrinsipKerjaChecksum">Prinsip Kerja Checksum</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div id="content">
+        <article id="ModelReferensiTCP/IP" class="card">
+            <br>
+            <h2>Model Referensi TCP/IP</h2>
+            <img src="img/TCP_IP.jpg" class="featured-image" alt="Model Referensi TCP/IP">
+            <p>Model referensi TCP/IP terdiri atas empat lapis</p>
+            <h4>1. Application Layer</h4>
+            <p>Layer di paling atas adalah <i>Application Layer</i> atau Layer Application. Layer ini termasuk ke dalam kategori upper layer atau layer yang berinteraksi dekat 
+                dengan pengguna. Secara urutan, layer ini adalah layer yang berada di urutan paling atas, di atas Presentation Layer. Model TCP/IP tidak 
+                memiliki session layer dan presentation layer. Layer ini memiliki macam-macam protokol tingkat tinggi, yaitu : TELNET, FTP,SMTP, DNS, HTTP, dan WWW.</p>
+            <h4>2. Transport Layer</h4>
+            <p>Layer di bawah <i>Application Layer</i> adalah <i>Transport Layer</i>. berfungsi menghubungkan antara aplication layer dan internet layer, contohnya : UDP, TCP, SNMP (apliccation) menggunakan UDP, Telnet, FTP, SMTP (apliccation) menggunakan TCP </p>
+            <h4>3. Internet Layer</h4>
+            <p>Layer ini berfungsi untuk memberikan layanan dasar pengantaran data. salah satu protokol yang bekerja pada layer ini adlah IP (internet protokol)</p>
+            <h4>4. Network Interface </h4>
+            <p>Layer terbawah dari model TCP/IP adalah Network Interface Layer, tanggung jawab utama
+                dari layer ini adalah menentukan bagaimana sebuah komputer dapat terkoneksi ke dalam
+                suatu jaringan komputer, hal ini sangat penting karena data harus dikirimkan dari dan ke
+                suatu host melalui sambungan pada suatu jaringan.</p>
+
+                <section>
+                <h2>Mengapa Model Referensi dibuat berlayer?</h2>
+                <ul>
+                    <li>Membantu dalam desain protokol, karena protokol yang beroperasi
+                        pada lapisan tertentu telah mendefinisikan informasi dan bertindak
+                        untuk tugas tertentu dan menjadi penghubung untuk lapisan atas dan
+                        bawahnya.</li>
+                    <li>Percepatan kompetisi antar vendor</li>
+                    <li>Mencegah pengaruh terhadap layer lainnya akibat adanya efek yang
+                        terjadi akibat perubahan teknologi dan kemampuan pada suatu layer</li>
+                    <li>Menyediakan bahasa yang sama dalam mendeskripsikan fungsi dan
+                        kemampuan jaringan</li>
+                </ul>
+                </section>
+                <br>
+                <!-- <section>
+                    <h2>Fungsi Transport Layer</h2>
+                    <p>Layer OSI ini bertanggung jawab untuk membagi data menjadi segmen, menjaga koneksi logika antar terminal, dan menyediakan penanganan error.</p>
+                    <br>
+                </section> -->
+        </article>
+        
+
+
+        <article id="PenjelasanPortNumber" class="card">
+            <br>
+            <h2>Penjelasan Port Number, fungsi, dan contoh proses kerjanya</h2>
+            <h3>Penjelasan</h3>
+            <p>Port number pada jaringan komputer merupakan angka biner sepanjang 16 bit yang berfungsi sebagai nomor untuk layanan yang digunakan didalam jaringan komputer. </p>
+            <h3>Fungsi</h3>
+            <p>Fungsi Port Number Dalam Komunikasi Jaringan Komputer:</p>
+            <ul>
+                <li><h4>Well-known Port</h4>
+                    <p> yang pada awalnya berkisar antara 0 hingga 255 tetapi kemudian diperlebar untuk mendukung antara 0 hingga 1023. Port number yang termasuk ke dalam well-known port, selalu merepresentasikan layanan jaringan yang sama, dan ditetapkan oleh Internet Assigned Number Authority (IANA). Beberapa di antara port-port yang berada di dalam range Well-known port masih belum ditetapkan dan direservasikan untuk digunakan oleh layanan yang bakal ada pada masa depan dalam komunikasi kepemimpinan . Well-known port didefinisikan dalam RFC 1060.</p>
+                </li>
+                <li>
+                    <h4>Registered Port</h4>
+                    <p>Port-port yang digunakan oleh vendor-vendor komputer atau jaringan yang berbeda untuk mendukung aplikasi dan sistem operasi yang mereka buat. Registered port juga diketahui dan didaftarkan oleh IANA tetapi tidak dialokasikan secara permanen, sehingga vendor lainnya dapat menggunakan port number yang sama. Range registered port berkisar dari 1024 hingga 49151 dan beberapa port di antaranya adalah Dynamically Assigned Port.</p>
+                </li>
+                <li>
+                    <h4>Dynamically Assigned Port</h4>
+                    <p>Merupakan port-port yang ditetapkan oleh sistem operasi atau aplikasi yang digunakan untuk melayani request dari pengguna sesuai dengan kebutuhan. Dynamically Assigned Port berkisar dari 1024 hingga 65536 dan dapat digunakan atau dilepaskan sesuai kebutuhan sebagaimana penyebab keberhasilan dalam komunikasi.</p>
+                </li>
+            </ul>
+            <h3>Contoh Proses Kerja</h3>
+            <p>Misalkan kita menggunakan protokol SSH</p>
+            <img src="img/ssh-tunnel.jpg" class="featured-image1" alt="SSH (Secure Shell)">
+            <p>Cara kerja protokol SSH adalah menggunakan model client-server. Jadi koneksi yang terjadi adalah SSH client melakukan koneksi ke SSH server.
+                SSH client melakukan proses koneksi dan menggunakan kunci kriptografi untuk memverifikasi dan mengidentifikasi SSH server.
+                SSH client dan SSH server dapat tersambung menggunakan kunci yang sama serta melalui proses verifikasi.
+                Jika kunci tidak sama,  koneksi tidak akan bisa pernah tersambung.
+                Jika tersambung, maka koneksi yang tersambung dienkripsi menggunakan symmetric encryption dan hashing algorithm. Proses enkripsi ini bertujuan untuk memastikan kerahasiaan dan keutuhan data yang dipertukarkan antara client dengan server.
+                Jadi SSH client mengawali koneksi dengan memanggil SSH server menggunakan aplikasi SSH client (PuTTY di Windows). Kemudian SSH server mengirimkan public key ke SSH client. 
+                Kemudian SSH client merespon dengan memberikan pasangan kunci yang diberikan oleh SSH server.
+                Selanjutnya keduanya melakukan negosiasi atau verifikasi koneksi dan memulai membuka koneksi yang aman. Setelah selesai, SSH client sudah dapat masuk ke dalam server dengan pertukaran data yang terus dienkripsi.
+            </p>
+            <br>
+        </article>
+        
+        <article id="PenjelasanTentangUDP" class="card">
+            <br>
+            <h2>Penjelasan tentang UDP</h2>
+            <p>UDP adalah kependekan dari User Datagram Protocol metupakan bagian dari internet protocol. UDP merupakan salah satu protokol lapisan transpor TCP/IP yang mendukung komunikasi yang tidak andal (unreliable), tanpa koneksi (connectionless) antara host-host dalam jaringan yang menggunakan TCP/IP.</p>
+            
+            <h2>Prinsip Kerja UDP</h2>
+            <p>Ada beberapa tahapan cara kerja UDP yang dilakukan, setiap tahapan kerja saling sinambung. Berikut penjelasan yang bersifat singkat.</p>
+            <ol>
+                <li>Paket berisi client port dan port sumber berbentuk file text dikirim di dalam UDP Header</li>
+                <li>Paket isi port client dan port sumber audio dikirim ke server dalam UDP Header</li>
+                <li>Tujuan UDP membaca nomor port tujuan dan proses data</li>
+                <li>Paket asli mempunyai port tujuan, sehingga server bisa mengirimkan kembali data ke FTFP Client</li>
+                <li>Point 3 dan 4 berulang kembali ketika file audio dikirimkan client.</li>
+                <li>Ketika aplikasi ingin mengirim data, UDP tidak akan membuffer ataupun memfragmen tiap data yang masuk</li>
+                <li>Karena data tidak mengalami prossesing data yang berbelit terutama karena tidak memfragmen data, maka jika data lebih besar daripada MTU, lapisan IP yang harus memfragmennya.</li>
+            </ol>
+            <br>
+        </article>
+        <article id="PrinsipKerjaChecksum" class="card">
+            <br>
+            <h2>Prinsip kerja Checksum Checking</h2>
+            <p>Checkum adalah urutan angka dan huruf yang digunakan untuk memeriksa apakah terdapat kesalahan data. Selain memeriksa kesalahan data, metode cheksum juga dapat digunakan untuk memeriksa apakah file tersebut masih asli atau telah mengalami perubahan akibat proses transmisi, penyimpanan atau modifikasi secara sengaja.</p>
+            <h2>Contoh</h2>
+            <!-- <p>Pada metode ini, pengecekan dilakukan dengan menjumlahkan sekumpulan data setelah itu jumlah tadi di complement. Dengan teknik checksum, sebuah checksum ditambahkan pada akhir dari sebuah message. Receiver menghitung checksumnya dengan cara yang sama dan membandingkannya dengan checksum yang ditransmisi sender. Jika dua nilai tersebut sama, maka message diduga tidak ada error. Konsep ini dapat dijelaskan dengan gambar berikut</p> -->
+            <img src="img/checksum.JPG" class="featured-image2" alt="Checksum">
+            <br>
+        </article>
+    </div>
+    <aside>
+        <article class="profile card">
+            <header>
+            <h2>Profil</h2>
+            <!-- <p>Kota Kembang Paris van Java</p> -->
+            <figure>
+                <img src="img/Reinhart.jpg">
+                <!-- <figcaption>Lambang</figcaption> -->
+            </figure>
+            </header>
+            <section>
+                <h3>Informasi Lainnya</h3>
+                <table>
+                <tr>
+                    <th>Nama</th>
+                    <td>Reinhart Wibisono Soplantila</td>
+                </tr>
+                
+                <tr>
+                    <th>Departemen</th>
+                    <td>Teknik Informatika</td>
+                </tr>
+                <tr>
+                    <th>Fakultas</th>
+                    <td>Teknik</td>
+                </tr>
+                    <tr>
+                    <th>Universitas</th>
+                    <td>Universitas Hasanuddin</td>
+                </tr>
+            </table>
+            </section>
+        </article>
+    </aside>
+</main>
+<footer>
+<p>Jaringan Komputer</p>
+</footer>
+
+
+<!-- 
+
+<br><br>
+<ul>
+    <li>List item 1</li>
+    <li>List item 2</li>
+    <li>List item 3
+        <ul>
+            <li>List item 4.1</li>
+            <li>List item 4.2</li>
+            <li>List item 4.3</li>
+        </ul>
+    </li>
+    <li>List item 4</li>
+ </ul>
+
+ <ol type="A" start="" reversed>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+ </ol>
+
+ <blockquote cite="https://id.wikipedia.org/wiki/Situs_web">
+    <p>Situs web (bahasa Inggris: website) adalah sekumpulan halaman web yang saling berhubungan yang umumnya   berada 
+        pada peladen yang sama berisikan kumpulan informasi yang disediakan secara perorangan, kelompok, atau organisasi.</p>
+ </blockquote>
+
+<pre>
+    Puisi
+Mawar itu merah
+melati itu putih
+semua itu membosankan 
+</pre>
+
+<p>Dicoding adalah sebuah perusahaan startup yang bertujuan mengembangkan ekosistem developer di Indonesia.
+    Berdiri sejak 5 Januari 2015, Dicoding memiliki platform pembelajaran elektronik di laman Dicoding.com.</p>
+<figure>
+    <img src="https://i.imgur.com/cs2BJzw.jpg" alt="dicoding" width="200px">
+    <figcaption>Dicoding</figcaption>
+</figure>
+<p>Materi perdana yang menjadi magnet dari awal berdirinya Dicoding hingga kini adalah kelas Menjadi Android Developer
+    Expert. Kelas ini dikembangkan oleh Google Developer Expert in Android, Sidiq Permana dan Head of Dicoding Academy,
+    Ahmad Imaduddin. Seperti halnya kelas Picodiploma lain, modul online-nya juga hadir dalam bentuk buku berjudul sama
+    yang telah mendapatkan ijin dan ISBN.</p>
+
+<a href="" download="" hreflang=""></a>
+
+<p><em>Oding</em> adalah seorang pelajar</p>
+<p>Dia adalah seorang <em>pelajar</em></p>
+
+<p>Kesehatan merupakan hal yang penting, jaga pola makan yang teratur dan <strong>jangan sampai makan tengah
+    malam!</strong></p>
+
+    <p>Sebelum pulang kerja, ia berkata kepadaku: <q>Maaf saya tidak bisa hadir dalam pertemuan nanti</q></p>
+
+    <p>Sukrosa merupakan suatu disakarida yang dibentuk dari monomer-monomernya yang berupa unit glukosa dan fruktosa,dengan rumus molekul C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>.</p>
+ 
+<p>Salah satu persamaan paling umum dalam semua fisika adalah E=MC<sup>2</sup></p>
+
+<p>Ini adalah periode perang saudara. Pesawat ruang angkasa pemberontak, menyerang dari pangkalan tersembunyi, telah
+    memenangkan kemenangan pertama mereka melawan Kekaisaran Galactic yang jahat. Selama pertempuran,
+    <mark>mata-mata
+        Pemberontak berhasil mencuri rencana rahasia
+    </mark>
+    ke senjata pamungkas Kekaisaran, STAR DEATH, stasiun ruang angkasa
+    berlapis baja dengan kekuatan yang cukup untuk menghancurkan seluruh planet.
+ </p>
+
+
+
+
+ <header>
+    <h1>Bandung</h1>
+    <p>Kota metropolitan terbesar di Provinsi Jawa Barat, sekaligus menjadi ibu kota provinsi tersebut.</p>
+    <nav>
+        <ul>
+            <li><a href="#sejarah">Sejarah</a></li>
+            <li><a href="#geografis">Geografis</a></li>
+            <li><a href="#wisata">Wisata</a></li>
+        </ul>
+    </nav>
+ </header>
+
+ <article>
+    <header>
+        <h1>Judul Artikel</h1>
+        <h2>Oleh: Dicoding Indonesia</h2>
+    </header>
+    <p>....... Konten artikel dimulai dari sini ......</p>
+    <footer>
+        <p>Bagikan artikel ini melalui</p>
+        <ul>
+            <li>Twitter</li>
+            <li>Facebook</li>
+            <li>......</li>
+        </ul>
+    </footer>
+ </article>
+ 
+
+
+<aside>
+    <article>
+        <header>
+            <h2>Kota Bandung</h2>
+            <p>Kota Kembang Paris van Java</p>
+            <figure>
+                <img src="img/bandung-badge.png">
+                <figcaption>Lambang</figcaption>
+            </figure>
+        </header>
+    </article>
+</aside>
+
+
+ <h2>Kota Bandung</h2>
+ <p>Kota Kembang Paris van Java</p>
+ <figure>
+     <img src="assets/image/lambang.png">
+     <figcaption>Lambang</figcaption>
+ </figure>
+ <p>Belajar Dasar Pemrograman Web &#169; 2019, Dicoding Academy</p> -->
+
+ <!-- <h1>Pemenang Piala Dunia tiga tahun terakhir</h1>
+ 
+<table border="2">
+   <tr>
+       <th rowspan="5" scope="">Tahun</th>
+       <th>Juara 1</th>
+       <th>Juara 2</th>
+       <th>Juara 3</th>
+   </tr>
+   <tr>
+       <td rowspan="2">2018</td>
+       <td colspan="3">Prancis</td>
+       <td>Kroasia</td>
+       <td>Belgium</td>
+   </tr>
+   <tr>
+       <td>2014</td>
+       <td>Jerman</td>
+       <td>Argentina</td>
+       <td>Belanda</td>
+   </tr>
+   <tr>
+       <td>2010</td>
+       <td>Spanyol</td>
+       <td>Belanda</td>
+       <td>Jerman</td>
+   </tr>
+</table> -->
+
+<!-- <style>
+    p {
+        color: red !important;      keyword !important menandakan sangat penting
+    }                               sehingga css akan membaca important 
+                                    ketimbang membaca perubahan di akhir
+    p {
+        color: blue;
+    }
+</style> -->
+
+
+</body>
+</html>
