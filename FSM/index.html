@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+
+<header>
+    <div class="jumbotron">
+        <h1>  Pemodelan Protokol Komunikasi Layer Transport Menggunakan Finite Slate Machine </h1>
+    </div>
+</header>
+
+<main>
+    <div id="content">
+        <article class="card">
+            <h1>1. Finite Slate Machines</h1>
+            <p>Finite Slate Machines (FSM) adalah sebuah metodologi perancangan sistem kontrol yang menggambarkan tingkah laku atau prinsip kerja sistem dengan menggunakan tiga hal berikut: State (Keadaan), Event (kejadian) dan Action (aksi).
+                Pada satu saat dalam periode waktu yang cukup signifikan, sistem akan berada pada salah satu state yang aktif. Sistem dapat beralih atau bertransisi menuju state lain jika mendapatkan masukan atau event tertentu, baik yang 
+                berasal dari perangkat luar atau komponen dalam sistemnya itu sendiri (misal interupsi timer).
+            </p>
+
+            <h1>2. Model FSM Dari Sisi Pengirim</h1>
+            <img src="img/FSM_Sender.png" alt=""  class="featured-image">
+            <p>
+                Gambar di atas merupakan diagram Finite Slate Machine Protokol rdt 3.0
+            </p>
+            
+            <ol>
+                <li>
+                    <b>Wait For Call 0 from Above</b>
+                    <p>State pertama adalah Wait For Call 0 from Above dimana pada state ini terdapat sebuah event bernama (rdt_send data) yang memiliki 3 action: </p>
+                    <ul style="list-style-type:circle">
+                        <li>sndpkt=make_pkt(0, data, checksum): aksi ini bertujuan untuk membuat paket yang berisi data sequence 0, data, dan checksum</li>
+                        <li>udt_send(sndpkt): aksi ini ber</li>
+                        <li>start timer: memulai waktu hitung mundur (countdown)</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <b>Wait for ACK 0</b>
+                    <p>State kedua adalah Wait for ACK 0 dimana state ini terdapat 3 event:</p>
+                    <ul style="list-style-type:circle">
+                        <li>rdt_rcv(rcvpkt) && (corrupt(rcvpkt)) || isACK(rcvpkt,1)): event ini akan mengecek apakah paket yang diterima mengalami corrupt atau ACK yang diterima adalah 1. </li>
+                        <li>Timeout: didalam event ini terdapat 2 aksi, yaitu mengirim ulang paket (udt_send(pkt)) dan memulai waktu countdown (start_timer). Event ini akan berjalan waktu countdown yang diberikan telah habis</li>
+                        <li>rdt_rcv(rcvpkt) && notcorrupt(rcvpkt) && isACK(rcvpkt,0): event ini menerima paket yang tidak corrupt dan ACK yang diterima adalah 0. Aksi yang ada di event ini yaitu stop_timer yang berarti menghentikan countdown</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <b>wait for call 1 from above</b>
+                    <p>State ketiga adalah wait for call 1 from above dimana state ini memiliki 2 event yaitu:</p>
+                    <ul style="list-style-type:circle">
+                        <li>rdt_rcv(rcvpkt): event ini hanya menerima paket dan tidak melakukan aksi apapun </li>
+                        <li>rdt_send(data): pada event ini terdapat tiga aksi, yaitu: 
+                            <ul style="list-style-type:circle">
+                                <li>sndpkt=make_pkt(1,data,checksum): pada action ini paket berisi sequence 1, data, checksum</li>
+                                <li>udt_send(sndpkt) yang berarti paket yang terlah diterima akan dikirim lagi</li>
+                                <li>start_time: action ini akan memulai waktu countdown</li>
+                            </ul>
+                        </li>    
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <b> wait for ACK 1 </b>
+                    <p>State keempat adalah wait for ACK 1 dimana state ini memiliki 3 event yang mirip dengan state wait for ACK 0 namun yang membedakan adalah informasi yang dikirim adalah sequence 1</p>
+                </li>
+            </ol>
+            
+        </article>
+
+        <article class="card">
+            <h1>2. Model FSM Dari Sisi Penerima</h1>
+            <img src="img/FSM_Receiver.JPG" alt="" class="featured-image">
+            <p>Gambar di atas merupakan diagram Finite Slate Machine Protokol rdt 3.0</p>
+            
+            <ol>
+                <li>
+                    <b>Wait For 0 From Below</b>
+                    <p>State pertama adalah Wait For 0 From Below, dimana state ini memiliki 2 event:</p>
+                    <ul style="list-style-type:circle">
+                        <li>
+                            <p>
+                                rdt_rcv(rcvpkt) && notcorrupt(rcvpkt) && has_seq1(rcvpkt): Pada event ini, paket yang diterima mengalami corrupt atau sequence number pada paket itu adalah 1. Action yang ada pada event ini adalah:
+                            </p>
+                            <ul style="list-style-type:circle">
+                                <li>udt_send(sndpkt), pada action ini, paket yang bernilai ACK 1 akan dikirim ke pengirim sehingga paket tersebut dapat dikirim ulang, setelah action telah dilakukan, state tidak berubah</li>
+                            </ul>
+                        </li>
+                        <li>rdt_rcv(rcvpkt) && corrupt(rcvpkt) || has_seq0(rcvpkt): Pada event ini, paket yang diterima tidak terjadi corrupt (salah) dan memiliki sequnce number 1. Event ini memiliki 4 aksi: </li>
+                        <ul style="list-style-type:circle">
+                            <li>extract(rcvpkt, data), aksi ini akan mengekstrak paket yang telah diterima</li>
+                            <li>deliver_data(data), setelah paket diekstrak, paket akan dikirim ke layer berikutnya</li>
+                            <li>sndpkt=make_pkt(ACK, 0, checksum), membuat pakey yang berisi informasi ACK 0 dan checksum</li>
+                            <li>udt_send(sndpkt), setelah paket dibuat, paket akan dikirim ke pengirim</li>
+                        </ul>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <b>Wait For 1 From Above</b>
+                    <p>State kedua adalah Wait For 1 From Above, dimana state ini memiliki 2 event:</p>
+                    <ul style="list-style-type:circle">
+                        <li>rdt_rcv(rcvpkt) && corrupt(rcvpkt) || has_seq0(rcvpkt): Pada event ini, paket yang diterima mengalami corrupt atau sequence number pada paket itu adalah 0. Action yang ada pada event ini adalah:</li>
+                        <ul style="list-style-type:circle">
+                            <li>udt_send(sndpkt): pada action ini, paket yang bernilai ACK 0 akan dikirim ke pengirim sehingga paket tersebut dapat dikirim ulang, setelah action telah dilakukan, state tidak berubah</li>
+                        </ul>
+                        <li>rdt_rcv(rcvpkt) && notcorrupt(rcvpkt) && has_seq1(rcvpkt): Pada event ini, paket yang diterima tidak terjadi corrupt (salah) dan memiliki sequnce number 1.</li>
+                        <ul style="list-style-type:circle">
+                            <li>extract(rcvpkt, data), aksi ini akan mengekstrak paket yang telah diterima</li>
+                            <li>deliver_data(data), setelah paket diekstrak, paket akan dikirim ke layer berikutnya</li>
+                            <li>sndpkt=make_pkt(ACK, 0, checksum), membuat pakey yang berisi informasi ACK 0 dan checksum</li>
+                            <li>udt_send(sndpkt), setelah paket dibuat, paket akan dikirim ke pengirim</li>
+                        </ul>
+                    </ul>
+                </li>
+            </ol>
+        
+        </article>
+        
+    </div>
+    <aside>
+        <article class="profile card">
+            <header>
+            <h2>Profil</h2>
+            <!-- <p>Kota Kembang Paris van Java</p> -->
+            <figure>
+                <img src="img/Reinhart.jpg">
+                <!-- <figcaption>Lambang</figcaption> -->
+            </figure>
+            </header>
+            <section>
+                <h3>Informasi Lainnya</h3>
+                <table>
+                <tr>
+                    <th>Nama</th>
+                    <td>Reinhart Wibisono Soplantila</td>
+                </tr>
+                
+                <tr>
+                    <th>Departemen</th>
+                    <td>Teknik Informatika</td>
+                </tr>
+                <tr>
+                    <th>Fakultas</th>
+                    <td>Teknik</td>
+                </tr>
+                    <tr>
+                    <th>Universitas</th>
+                    <td>Universitas Hasanuddin</td>
+                </tr>
+            </table>
+            </section>
+        </article>
+    </aside>
+</main>
+<footer>
+<p>Jaringan Komputer</p>
+</footer>
+
+
+
+</body>
+</html>
