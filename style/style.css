@@ -48,18 +48,21 @@ footer{
     object-position: center;
 }
 .featured-image2{
-    width: 50%;
-    margin-left: 22%;
+    width: 80%;
+    margin-left: 10%;
     max-height: 500px;
     object-fit: cover;
     object-position: center;
 }
-
+.featured-image3{
+    width: 50%;
+}
 .profile img{
     width: 200px;
 }
 
 .card{
+    margin-top: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5px;
 }
